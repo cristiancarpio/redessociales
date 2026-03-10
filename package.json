@@ -1,18 +1,11 @@
 {
-  "name": "dark-viral-content-engine",
+  "name": "motor-viral-contenido-oscuro",
   "version": "1.0.0",
-  "description": "AI-powered viral content engine for horror and dark storytelling",
-  "main": "api/generate.js",
+  "description": "Motor de contenido viral con IA para terror y misterio latinoamericano",
   "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel --prod"
+    "dev": "vercel dev"
   },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.24.0"
-  },
-  "devDependencies": {
-    "vercel": "^34.0.0"
-  },
+  "dependencies": {},
   "engines": {
     "node": ">=18.0.0"
   }
