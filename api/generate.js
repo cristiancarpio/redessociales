@@ -1,32 +1,31 @@
 /* ═══════════════════════════════════════════════════
    MOTOR VIRAL DE CONTENIDO OSCURO — API Serverless
-   Motor: Google Gemini 2.0 Flash
+   Motor: OpenAI GPT-4o-mini
+   Público objetivo: Latinoamérica y España
    ═══════════════════════════════════════════════════ */
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+const OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
 
-async function callGemini(prompt) {
-  // Lee la key del entorno de Vercel
-  const apiKey = process.env.GEMINI_API_KEY;
+async function callOpenAI(prompt) {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error('OPENAI_API_KEY no está configurada');
 
-  if (!apiKey) {
-    throw new Error('GEMINI_API_KEY no está configurada en las variables de entorno');
-  }
-
-  const res = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+  const res = await fetch(OPENAI_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
     body: JSON.stringify({
-      contents: [
+      model:       'gpt-4o-mini',
+      max_tokens:  2048,
+      temperature: 0.9,
+      messages: [
         {
-          role: 'user',
-          parts: [{ text: prompt }]
+          role:    'user',
+          content: prompt,
         }
       ],
-      generationConfig: {
-        temperature:     0.9,
-        maxOutputTokens: 2048,
-      },
     }),
   });
 
@@ -37,8 +36,8 @@ async function callGemini(prompt) {
     throw new Error(msg);
   }
 
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) throw new Error('Gemini no devolvió contenido');
+  const text = data?.choices?.[0]?.message?.content;
+  if (!text) throw new Error('OpenAI no devolvió contenido');
   return text;
 }
 
@@ -55,18 +54,19 @@ ${angle ? `ÁNGULO/GIRO: ${angle}` : ''}
 Usá exactamente estos encabezados:
 
 ### TÍTULO VIRAL
-Un título que detenga el scroll.
+Un título que detenga el scroll. Que genere curiosidad o impacto inmediato.
 
 ### GANCHO INICIAL
-2-3 oraciones impactantes.
+2-3 oraciones. Hecho perturbador, afirmación impactante o pregunta escalofriante.
 
 ### HISTORIA
-La historia completa. Párrafos cortos. Tensión progresiva. Referencias culturales latinoamericanas.
+La historia completa. Párrafos cortos (2-3 oraciones). Tensión progresiva. Detalles sensoriales. Referencias culturales latinoamericanas.
 
 ### FINAL CON CLIFFHANGER
-Terminá con: "¿Querés saber qué pasó después? Comentá PARTE 2."
+Terminá con una línea que dispare comentarios:
+"¿Querés saber qué pasó después? Comentá PARTE 2."
 
-Todo en español latino natural.`,
+Todo en español latino natural y fluido.`,
 
   script: ({ platform, genre, duration, topic }) => `
 Sos un guionista viral de videos cortos para público latinoamericano.
@@ -76,7 +76,7 @@ Creá un guión de ${duration} para ${platform} sobre ${topic || `una historia d
 Frase de apertura que detiene el scroll.
 
 ### GUIÓN DE NARRACIÓN
-Texto completo. Oraciones cortas. [PAUSA] donde corresponda.
+Texto completo. Oraciones cortas. [PAUSA] donde corresponda. Español hablado natural.
 
 ### SUGERENCIAS DE ESCENAS
 Viñetas con sugerencias visuales.
@@ -89,7 +89,7 @@ Frase final para maximizar comentarios.`,
 
   ideas: ({ filter, platform, count = 20 }) => `
 Generá exactamente ${count} ideas de contenido viral para ${platform} sobre ${filter} para audiencia latinoamericana.
-Lista numerada. Una idea por línea. Sin explicaciones.
+Lista numerada. Una idea por línea. Sin explicaciones adicionales.
 Variá entre: crímenes reales, asesinos seriales, misterios sin resolver, lugares tenebrosos, paranormal, historia oscura latinoamericana.`,
 
   images: ({ style, subject, count }) => `
@@ -191,13 +191,13 @@ module.exports = async function handler(req, res) {
   catch (e) { return res.status(400).json({ error: 'Parámetros inválidos: ' + e.message }); }
 
   try {
-    const content = await callGemini(prompt);
+    const content = await callOpenAI(prompt);
     if (body.type === 'multiply') {
       return res.status(200).json({ content, results: parseMultiplierOutput(content, body.outputs || []) });
     }
     return res.status(200).json({ content });
   } catch (error) {
-    console.error('Error Gemini:', error.message);
+    console.error('Error OpenAI:', error.message);
     return res.status(500).json({ error: error.message });
   }
 };
