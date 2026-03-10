@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#080808"/>
+  <meta name="description" content="Motor de contenido viral con IA para historias de terror y misterio"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="apple-mobile-web-app-title" content="Motor Oscuro"/>
+  <link rel="manifest" href="/manifest.json"/>
+  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
+  <title>Motor Viral de Contenido Oscuro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+  <div class="grain-overlay"></div>
+  <div class="blood-bg"></div>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-skull">☠</span>
+        <div class="logo-text">
+          <span class="logo-main">MOTOR VIRAL</span>
+          <span class="logo-sub">CONTENIDO OSCURO</span>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span class="meta-pill">230K FB</span>
+        <span class="meta-pill">8K YT</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav" id="mainNav">
+    <button class="nav-btn active" data-tab="dashboard">⚡<span>Inicio</span></button>
+    <button class="nav-btn" data-tab="story">📖<span>Historia</span></button>
+    <button class="nav-btn" data-tab="script">🎬<span>Guión</span></button>
+    <button class="nav-btn" data-tab="ideas">💡<span>Ideas</span></button>
+    <button class="nav-btn" data-tab="tools">🔧<span>Herram.</span></button>
+    <button class="nav-btn" data-tab="multiply">✖<span>Multiplicar</span></button>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- DASHBOARD -->
+    <section class="tab-panel active" id="tab-dashboard">
+      <div class="panel-header">
+        <h2>Centro de Comando Diario</h2>
+        <button class="btn-ghost" id="refreshDashboard">↻ Actualizar</button>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-card">
+          <div class="dc-label"><span class="dc-dot"></span>Ideas Virales</div>
+          <div class="dc-body" id="dc-ideas-body"><p class="ph">Presioná generar para cargar las ideas de hoy</p></div>
+          <button class="btn-primary btn-sm" onclick="dashGenerate('ideas')">Generar 10 Ideas</button>
+        </div>
+        <div class="dash-card">
+          <div class="dc-label"><span class="dc-dot"></span>Arranques de Historias</div>
+          <div class="dc-body" id="dc-stories-body"><p class="ph">Presioná generar para cargar historias</p></div>
+          <button class="btn-primary btn-sm" onclick="dashGenerate('stories')">Generar 3 Historias</button>
+        </div>
+        <div class="dash-card">
+          <div class="dc-label"><span class="dc-dot"></span>Guiones para Reels</div>
+          <div class="dc-body" id="dc-scripts-body"><p class="ph">Presioná generar para cargar guiones</p></div>
+          <button class="btn-primary btn-sm" onclick="dashGenerate('scripts')">Generar 2 Guiones</button>
+        </div>
+        <div class="dash-card">
+          <div class="dc-label"><span class="dc-dot"></span>Prompts de Imágenes</div>
+          <div class="dc-body" id="dc-prompts-body"><p class="ph">Presioná generar para cargar prompts</p></div>
+          <button class="btn-primary btn-sm" onclick="dashGenerate('prompts')">Generar Prompts</button>
+        </div>
+        <div class="dash-card dash-card--wide">
+          <div class="dc-label"><span class="dc-dot"></span>Hashtags del Día</div>
+          <div class="dc-body" id="dc-hashtags-body"><p class="ph">Presioná generar para cargar hashtags</p></div>
+          <button class="btn-primary btn-sm" onclick="dashGenerate('hashtags')">Generar Hashtags</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GENERADOR DE HISTORIAS -->
+    <section class="tab-panel" id="tab-story">
+      <div class="panel-header"><h2>Generador de Historias Virales</h2></div>
+      <div class="tool-form">
+        <div class="form-group">
+          <label class="form-label">Categoría</label>
+          <div class="cat-grid" id="storyCategory">
+            <button class="cat-btn active" data-value="historia de asesino serial">🔪 Asesino Serial</button>
+            <button class="cat-btn" data-value="crimen verdadero perturbador">🚔 Crimen Real</button>
+            <button class="cat-btn" data-value="encuentro paranormal">👻 Paranormal</button>
+            <button class="cat-btn" data-value="leyenda urbana latinoamericana">🌆 Leyenda Urbana</button>
+            <button class="cat-btn" data-value="historia histórica oscura de latinoamerica">📜 Historia Oscura</button>
+            <button class="cat-btn" data-value="desaparición inexplicable">❓ Desaparición</button>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Tono</label>
+            <select class="form-select" id="storyTone">
+              <option value="suspenso lento y escalofriante">Suspenso Escalofriante</option>
+              <option value="impactante y de ritmo rápido">Impactante y Rápido</option>
+              <option value="psicológico y perturbador">Psicológico y Perturbador</option>
+              <option value="estilo documental de crimen real">Documental Crimen Real</option>
+              <option value="primera persona aterrador">Primera Persona Aterrador</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Extensión</label>
+            <select class="form-select" id="storyLength">
+              <option value="corta (300 palabras)">Corta (300 pal.)</option>
+              <option value="media (600 palabras)" selected>Media (600 pal.)</option>
+              <option value="larga (1000 palabras)">Larga (1000 pal.)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ángulo o giro específico <span class="label-opt">(opcional)</span></label>
+          <input type="text" class="form-input" id="storyAngle" placeholder="ej: ubicación específica, evento real, giro único..."/>
+        </div>
+        <button class="btn-primary btn-full" id="generateStory"><span class="btn-icon">⚡</span>Generar Historia</button>
+      </div>
+      <div class="output-area" id="storyOutput" style="display:none">
+        <div class="output-toolbar">
+          <span class="output-label">Historia Generada</span>
+          <div class="output-actions">
+            <button class="btn-ghost btn-xs" onclick="copyOutput('storyOutputContent')">Copiar</button>
+            <button class="btn-ghost btn-xs" onclick="sendToMultiplier('storyOutputContent')">→ Multiplicar</button>
+          </div>
+        </div>
+        <div class="output-content" id="storyOutputContent"></div>
+      </div>
+    </section>
+
+    <!-- GENERADOR DE GUIONES -->
+    <section class="tab-panel" id="tab-script">
+      <div class="panel-header"><h2>Generador de Guiones para Videos Cortos</h2></div>
+      <div class="tool-form">
+        <div class="form-group">
+          <label class="form-label">Plataforma</label>
+          <div class="cat-grid" id="scriptPlatform">
+            <button class="cat-btn active" data-value="Facebook Reels">📘 Facebook Reels</button>
+            <button class="cat-btn" data-value="TikTok">🎵 TikTok</button>
+            <button class="cat-btn" data-value="YouTube Shorts">▶ YouTube Shorts</button>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Género</label>
+            <select class="form-select" id="scriptGenre">
+              <option value="asesino serial">Asesino Serial</option>
+              <option value="crimen real">Crimen Real</option>
+              <option value="paranormal">Paranormal</option>
+              <option value="misterio sin resolver">Misterio Sin Resolver</option>
+              <option value="lugar tenebroso">Lugar Tenebroso</option>
+              <option value="historia oscura">Historia Oscura</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Duración</label>
+            <select class="form-select" id="scriptDuration">
+              <option value="30 segundos">30 segundos</option>
+              <option value="60 segundos" selected>60 segundos</option>
+              <option value="90 segundos">90 segundos</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tema específico <span class="label-opt">(opcional)</span></label>
+          <input type="text" class="form-input" id="scriptTopic" placeholder="ej: La Llorona, El Inca, crimen de Córdoba..."/>
+        </div>
+        <button class="btn-primary btn-full" id="generateScript"><span class="btn-icon">🎬</span>Generar Guión</button>
+      </div>
+      <div class="output-area" id="scriptOutput" style="display:none">
+        <div class="output-toolbar">
+          <span class="output-label">Guión Generado</span>
+          <button class="btn-ghost btn-xs" onclick="copyOutput('scriptOutputContent')">Copiar</button>
+        </div>
+        <div class="output-content" id="scriptOutputContent"></div>
+      </div>
+    </section>
+
+    <!-- GENERADOR DE IDEAS -->
+    <section class="tab-panel" id="tab-ideas">
+      <div class="panel-header"><h2>Generador de Ideas Virales</h2></div>
+      <div class="tool-form compact">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Tipo de Contenido</label>
+            <select class="form-select" id="ideasFilter">
+              <option value="todo tipo de contenido de terror y misterio latinoamericano">Todos los Tipos</option>
+              <option value="crímenes reales perturbadores de latinoamérica">Crímenes Reales</option>
+              <option value="asesinos seriales latinoamericanos">Asesinos Seriales</option>
+              <option value="desapariciones y misterios sin resolver de latinoamérica">Misterios Sin Resolver</option>
+              <option value="lugares tenebrosos y malditos de latinoamérica">Lugares Tenebrosos</option>
+              <option value="encuentros paranormales y sobrenaturales en latinoamérica">Paranormal</option>
+              <option value="eventos históricos oscuros de latinoamérica y españa">Historia Oscura</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Plataforma</label>
+            <select class="form-select" id="ideasPlatform">
+              <option value="Facebook">Facebook</option>
+              <option value="TikTok">TikTok</option>
+              <option value="YouTube">YouTube</option>
+              <option value="todas las plataformas">Todas</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-primary btn-full" id="generateIdeas"><span class="btn-icon">💡</span>Generar 20 Ideas</button>
+      </div>
+      <div class="output-area" id="ideasOutput" style="display:none">
+        <div class="output-toolbar">
+          <span class="output-label">Ideas Virales</span>
+          <button class="btn-ghost btn-xs" onclick="copyOutput('ideasOutputContent')">Copiar Todo</button>
+        </div>
+        <div class="output-content ideas-list" id="ideasOutputContent"></div>
+      </div>
+    </section>
+
+    <!-- HERRAMIENTAS -->
+    <section class="tab-panel" id="tab-tools">
+      <div class="panel-header"><h2>Herramientas de Contenido</h2></div>
+      <div class="subtab-bar">
+        <button class="subtab-btn active" data-subtab="images">🖼 Imágenes</button>
+        <button class="subtab-btn" data-subtab="hashtags">🏷 Hashtags</button>
+        <button class="subtab-btn" data-subtab="rewriter">✍️ Reescribir</button>
+        <button class="subtab-btn" data-subtab="analyzer">🔬 Analizar</button>
+      </div>
+
+      <!-- PROMPTS DE IMÁGENES -->
+      <div class="subtab-panel active" id="subtab-images">
+        <div class="tool-form">
+          <div class="form-group">
+            <label class="form-label">Estilo Visual</label>
+            <div class="cat-grid" id="imageStyle">
+              <button class="cat-btn active" data-value="horror cinematográfico oscuro">🎬 Cinematográfico</button>
+              <button class="cat-btn" data-value="lugares abandonados y en ruinas">🏚 Abandonado</button>
+              <button class="cat-btn" data-value="sombras ominosas y tenebrosas">🌑 Sombras</button>
+              <button class="cat-btn" data-value="escena paranormal y sobrenatural">👁 Paranormal</button>
+              <button class="cat-btn" data-value="investigación criminal noir oscuro">🔍 Noir Criminal</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Tema / Escena <span class="label-opt">(opcional)</span></label>
+              <input type="text" class="form-input" id="imageSubject" placeholder="ej: convento abandonado, figura en la niebla..."/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cantidad</label>
+              <select class="form-select" id="imageCount">
+                <option value="3">3 Prompts</option>
+                <option value="5" selected>5 Prompts</option>
+                <option value="10">10 Prompts</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-primary btn-full" id="generateImages"><span class="btn-icon">🖼</span>Generar Prompts de Imágenes</button>
+        </div>
+        <div class="output-area" id="imageOutput" style="display:none">
+          <div class="output-toolbar">
+            <span class="output-label">Prompts de Imágenes</span>
+            <button class="btn-ghost btn-xs" onclick="copyOutput('imageOutputContent')">Copiar</button>
+          </div>
+          <div class="output-content" id="imageOutputContent"></div>
+        </div>
+      </div>
+
+      <!-- HASHTAGS -->
+      <div class="subtab-panel" id="subtab-hashtags">
+        <div class="tool-form">
+          <div class="form-group">
+            <label class="form-label">Plataforma</label>
+            <div class="cat-grid" id="hashtagPlatform">
+              <button class="cat-btn active" data-value="Facebook">📘 Facebook</button>
+              <button class="cat-btn" data-value="TikTok">🎵 TikTok</button>
+              <button class="cat-btn" data-value="YouTube">▶ YouTube</button>
+              <button class="cat-btn" data-value="todas las plataformas">🌐 Todas</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tema del Contenido</label>
+            <input type="text" class="form-input" id="hashtagTopic" placeholder="ej: asesino serial argentino, casa embrujada en México..."/>
+          </div>
+          <button class="btn-primary btn-full" id="generateHashtags"><span class="btn-icon">🏷</span>Generar Hashtags</button>
+        </div>
+        <div class="output-area" id="hashtagOutput" style="display:none">
+          <div class="output-toolbar">
+            <span class="output-label">Sets de Hashtags</span>
+            <button class="btn-ghost btn-xs" onclick="copyOutput('hashtagOutputContent')">Copiar</button>
+          </div>
+          <div class="output-content" id="hashtagOutputContent"></div>
+        </div>
+      </div>
+
+      <!-- REESCRITOR -->
+      <div class="subtab-panel" id="subtab-rewriter">
+        <div class="tool-form">
+          <div class="form-group">
+            <label class="form-label">Pegá tu Historia</label>
+            <textarea class="form-textarea" id="rewriterInput" placeholder="Pegá cualquier historia para reescribirla en un formato viral y más atrapante..." rows="7"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Objetivo</label>
+            <select class="form-select" id="rewriterGoal">
+              <option value="hacerla más viral y atrapante para Facebook latinoamericano">Más Viral para Facebook</option>
+              <option value="optimizarla como guión para TikTok/Reels">Guión para TikTok/Reels</option>
+              <option value="agregarle más suspenso y giros inesperados">Agregar Suspenso</option>
+              <option value="hacerla más emotiva y fácil de compartir">Más Emotiva</option>
+              <option value="acortarla a una versión contundente de 150 palabras">Acortar y Potenciar</option>
+            </select>
+          </div>
+          <button class="btn-primary btn-full" id="generateRewrite"><span class="btn-icon">✍️</span>Reescribir Historia</button>
+        </div>
+        <div class="output-area" id="rewriterOutput" style="display:none">
+          <div class="output-toolbar">
+            <span class="output-label">Historia Reescrita</span>
+            <button class="btn-ghost btn-xs" onclick="copyOutput('rewriterOutputContent')">Copiar</button>
+          </div>
+          <div class="output-content" id="rewriterOutputContent"></div>
+        </div>
+      </div>
+
+      <!-- ANALIZADOR -->
+      <div class="subtab-panel" id="subtab-analyzer">
+        <div class="tool-form">
+          <div class="form-group">
+            <label class="form-label">Pegá una Publicación Viral</label>
+            <textarea class="form-textarea" id="analyzerInput" placeholder="Pegá cualquier post viral de Facebook o historia para analizar por qué funcionó..." rows="7"></textarea>
+          </div>
+          <button class="btn-primary btn-full" id="generateAnalysis"><span class="btn-icon">🔬</span>Analizar Post Viral</button>
+        </div>
+        <div class="output-area" id="analyzerOutput" style="display:none">
+          <div class="output-toolbar">
+            <span class="output-label">Análisis Viral</span>
+            <button class="btn-ghost btn-xs" onclick="copyOutput('analyzerOutputContent')">Copiar</button>
+          </div>
+          <div class="output-content" id="analyzerOutputContent"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MULTIPLICADOR -->
+    <section class="tab-panel" id="tab-multiply">
+      <div class="panel-header">
+        <h2>Multiplicador de Contenido</h2>
+        <span class="panel-badge">1 → 5</span>
+      </div>
+      <div class="tool-form">
+        <div class="form-group">
+          <label class="form-label">Tu Historia Principal</label>
+          <textarea class="form-textarea" id="multiplierInput" placeholder="Pegá o escribí tu historia principal. El motor generará un paquete completo de contenido a partir de ella..." rows="7"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Generar:</label>
+          <div class="checkbox-grid">
+            <label class="checkbox-item"><input type="checkbox" checked data-output="facebook_post"> Post de Facebook</label>
+            <label class="checkbox-item"><input type="checkbox" checked data-output="reel_script"> Guión para Reel</label>
+            <label class="checkbox-item"><input type="checkbox" checked data-output="short_video"> Guión Video Corto</label>
+            <label class="checkbox-item"><input type="checkbox" checked data-output="image_prompts"> Prompts de Imágenes</label>
+            <label class="checkbox-item"><input type="checkbox" checked data-output="hashtags"> Hashtags</label>
+          </div>
+        </div>
+        <button class="btn-primary btn-full btn-lg" id="generateMultiply"><span class="btn-icon">✖</span>Multiplicar Contenido</button>
+      </div>
+      <div id="multiplierOutput" style="display:none">
+        <div class="multiply-results" id="multiplyResults"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-inner">
+      <div class="loading-skull">☠</div>
+      <div class="loading-bar"><div class="loading-fill"></div></div>
+      <p class="loading-text" id="loadingText">Generando contenido...</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
