@@ -44,33 +44,38 @@ async function callGroq(prompt) {
 const PROMPTS = {
 
   story: ({ category, tone, length, angle }) => `
-Eres un maestro narrador de historias oscuras para una página de Facebook con 230.000 seguidores latinoamericanos.
-Escribí una historia viral de ${category} con estas especificaciones:
+Eres un narrador especializado en casos reales oscuros para una página de Facebook con 230.000 seguidores latinoamericanos.
+Contá un caso REAL y documentado de ${category} con estas especificaciones:
 
 TONO: ${tone}
 EXTENSIÓN: ${length}
-${angle ? `ÁNGULO/GIRO: ${angle}` : ''}
+${angle ? `CASO O ENFOQUE: ${angle}` : ''}
+
+IMPORTANTE: Usá SOLO casos reales, documentados y verificables. Mencioná nombres reales, fechas, lugares y datos concretos. Si el caso es de Latinoamérica o España mejor. No inventes nada.
 
 Usá exactamente estos encabezados:
 
 ### TÍTULO VIRAL
-Un título que detenga el scroll. Que genere curiosidad o impacto inmediato.
+Título basado en el caso real. Que detenga el scroll con impacto inmediato.
 
 ### GANCHO INICIAL
-2-3 oraciones. Hecho perturbador, afirmación impactante o pregunta escalofriante.
+2-3 oraciones con el dato más perturbador o impactante del caso real.
 
-### HISTORIA
-La historia completa. Párrafos cortos (2-3 oraciones). Tensión progresiva. Detalles sensoriales. Referencias culturales latinoamericanas.
+### EL CASO REAL
+Contá el caso completo con datos reales: nombres, fechas, lugares, hechos documentados.
+Párrafos cortos (2-3 oraciones). Tensión progresiva. Que parezca que lo estás descubriendo junto al lector.
 
-### FINAL CON CLIFFHANGER
-Terminá con una línea que dispare comentarios:
-"¿Querés saber qué pasó después? Comentá PARTE 2."
+### DATO FINAL PERTURBADOR
+Terminá con el dato más escalofriante del caso, una pregunta reflexiva o algo que el lector no sepa.
+NUNCA uses "Comentá PARTE 2" ni frases de ese estilo.
+Usá: un dato poco conocido del caso, una pregunta abierta, o una conclusión que deje en shock.
 
 Todo en español latino natural y fluido.`,
 
   script: ({ platform, genre, duration, topic }) => `
-Sos un guionista viral de videos cortos para público latinoamericano.
-Creá un guión de ${duration} para ${platform} sobre ${topic || `una historia de ${genre}`}.
+Sos un guionista viral de videos cortos para público latinoamericano especializado en casos reales.
+Creá un guión de ${duration} para ${platform} sobre ${topic || `un caso real de ${genre}`}.
+IMPORTANTE: Basate en hechos reales y documentados. Mencioná nombres, fechas y lugares reales.
 
 ### GANCHO (0-3 segundos)
 Frase de apertura que detiene el scroll.
@@ -88,9 +93,11 @@ Tiempos, pausas y tono de voz.
 Frase final para maximizar comentarios.`,
 
   ideas: ({ filter, platform, count = 20 }) => `
-Generá exactamente ${count} ideas de contenido viral para ${platform} sobre ${filter} para audiencia latinoamericana.
+Generá exactamente ${count} ideas de contenido viral basadas en CASOS REALES Y DOCUMENTADOS para ${platform} sobre ${filter} para audiencia latinoamericana.
 Lista numerada. Una idea por línea. Sin explicaciones adicionales.
-Variá entre: crímenes reales, asesinos seriales, misterios sin resolver, lugares tenebrosos, paranormal, historia oscura latinoamericana.`,
+Cada idea debe mencionar un caso real, persona real, lugar real o evento documentado.
+Variá entre: crímenes reales latinoamericanos, asesinos seriales documentados, desapariciones reales sin resolver, lugares con historia oscura real, eventos históricos perturbadores reales.
+NO incluyas nada inventado o ficticio.`,
 
   images: ({ style, subject, count }) => `
 Generá ${count} prompts detallados para imágenes IA en estilo: ${style}.
@@ -146,8 +153,9 @@ ${outputs.includes('image_prompts')  ? '### IMAGE_PROMPTS\n3 prompts de imagen I
 ${outputs.includes('hashtags')       ? '### HASHTAGS\nHashtags para Facebook, TikTok y YouTube.\n' : ''}`,
 
   dash_stories: () => `
-Generá 3 arranques de historias virales de terror/crimen para audiencia latinoamericana.
-Cada uno: título + gancho de 3 oraciones + género. Numerados. Menos de 100 palabras. Español latino.`,
+Generá 3 arranques basados en CASOS REALES Y DOCUMENTADOS de terror/crimen para audiencia latinoamericana.
+Cada uno: título con nombre del caso real + gancho de 3 oraciones con datos reales + género. Numerados. Menos de 100 palabras. Español latino.
+Solo casos reales verificables. Mencioná nombres y lugares concretos.`,
 
   dash_scripts: () => `
 Generá 2 ganchos virales para Reels de terror/crimen latinoamericano.
