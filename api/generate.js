@@ -1,23 +1,23 @@
 /* ═══════════════════════════════════════════════════
    MOTOR VIRAL DE CONTENIDO OSCURO — API Serverless
-   Motor: OpenAI GPT-4o-mini
+   Motor: Groq (Llama 3.3 70B) — GRATIS
    Público objetivo: Latinoamérica y España
    ═══════════════════════════════════════════════════ */
 
-const OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
-async function callOpenAI(prompt) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error('OPENAI_API_KEY no está configurada');
+async function callGroq(prompt) {
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) throw new Error('GROQ_API_KEY no está configurada');
 
-  const res = await fetch(OPENAI_URL, {
+  const res = await fetch(GROQ_URL, {
     method: 'POST',
     headers: {
       'Content-Type':  'application/json',
       'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model:       'gpt-4o-mini',
+      model:       'llama-3.3-70b-versatile',
       max_tokens:  2048,
       temperature: 0.9,
       messages: [
@@ -37,7 +37,7 @@ async function callOpenAI(prompt) {
   }
 
   const text = data?.choices?.[0]?.message?.content;
-  if (!text) throw new Error('OpenAI no devolvió contenido');
+  if (!text) throw new Error('Groq no devolvió contenido');
   return text;
 }
 
@@ -191,13 +191,13 @@ module.exports = async function handler(req, res) {
   catch (e) { return res.status(400).json({ error: 'Parámetros inválidos: ' + e.message }); }
 
   try {
-    const content = await callOpenAI(prompt);
+    const content = await callGroq(prompt);
     if (body.type === 'multiply') {
       return res.status(200).json({ content, results: parseMultiplierOutput(content, body.outputs || []) });
     }
     return res.status(200).json({ content });
   } catch (error) {
-    console.error('Error OpenAI:', error.message);
+    console.error('Error Groq:', error.message);
     return res.status(500).json({ error: error.message });
   }
 };
