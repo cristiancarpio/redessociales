@@ -379,3 +379,78 @@ window.copyOutput         = copyOutput;
 window.copyText           = copyText;
 window.sendToMultiplier   = sendToMultiplier;
 window.toggleMultiplyCard = toggleMultiplyCard;
+
+// ── PWA Install Banner ──────────────────────────────
+(function() {
+  let deferredPrompt = null;
+
+  function showBanner() {
+    const banner = document.getElementById('pwaBanner');
+    if (banner) banner.style.display = 'block';
+  }
+
+  function hideBanner() {
+    const banner = document.getElementById('pwaBanner');
+    if (banner) banner.style.display = 'none';
+  }
+
+  // Captura el evento antes que el navegador lo descarte
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showBanner();
+  });
+
+  window.addEventListener('appinstalled', () => {
+    hideBanner();
+    deferredPrompt = null;
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const banner     = document.getElementById('pwaBanner');
+    const installBtn = document.getElementById('pwaInstallBtn');
+    const closeBtn   = document.getElementById('pwaCloseBtn');
+    const iosHint    = document.getElementById('pwaIos');
+
+    if (!banner) return;
+
+    // Ya instalada como app
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+      || window.navigator.standalone === true;
+    if (isStandalone) return;
+
+    // Fue cerrada antes
+    try {
+      if (sessionStorage.getItem('pwaClosed')) return;
+    } catch(e) {}
+
+    // iOS → mostrar instrucciones manuales
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase());
+    if (isIOS && iosHint) {
+      showBanner();
+      if (installBtn) installBtn.style.display = 'none';
+      iosHint.style.display = 'block';
+    }
+
+    // Click en Instalar (Android/Chrome)
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        try {
+          await deferredPrompt.prompt();
+          const result = await deferredPrompt.userChoice;
+          if (result.outcome === 'accepted') hideBanner();
+        } catch(e) {}
+        deferredPrompt = null;
+      });
+    }
+
+    // Click en cerrar
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        hideBanner();
+        try { sessionStorage.setItem('pwaClosed', '1'); } catch(e) {}
+      });
+    }
+  });
+})();
