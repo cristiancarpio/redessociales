@@ -8,21 +8,37 @@
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <meta name="apple-mobile-web-app-title" content="Motor Oscuro"/>
-  <link rel="manifest" href="/manifest.json"/>
-  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="icons/icon-192.png"/>
   <title>Zona de Terror TV — Motor Viral</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/style.css"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div class="grain-overlay"></div>
   <div class="blood-bg"></div>
 
+  <!-- PWA Install Banner -->
+  <div class="pwa-banner" id="pwaBanner">
+    <div class="pwa-banner-inner">
+      <img src="icons/logo.jpg" alt="logo" class="pwa-banner-logo"/>
+      <div class="pwa-banner-text">
+        <strong>Instalá la app en tu cel</strong>
+        <span>Accedé sin internet, más rápido</span>
+      </div>
+      <button class="pwa-install-btn" id="pwaInstallBtn">Instalar</button>
+      <button class="pwa-close-btn" id="pwaCloseBtn">✕</button>
+    </div>
+    <div class="pwa-ios-hint" id="pwaIosHint">
+      📱 En iPhone: tocá <strong>Compartir</strong> → <strong>"Agregar a inicio"</strong>
+    </div>
+  </div>
+
   <header class="app-header">
     <div class="header-inner">
       <div class="logo">
-        <img src="/icons/logo.jpg" alt="Zona de Terror TV" class="logo-img"/>
+        <img src="icons/logo.jpg" alt="Zona de Terror TV" class="logo-img" onerror="this.style.display='none'"/>
         <div class="logo-text">
           <span class="logo-main">ZONA DE TERROR TV</span>
           <span class="logo-sub">MOTOR DE CONTENIDO VIRAL</span>
@@ -374,7 +390,7 @@
 
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-inner">
-      <img src="/icons/logo.jpg" alt="Zona de Terror TV" class="loading-logo"/>
+      <img src="icons/logo.jpg" alt="Zona de Terror TV" class="loading-logo"/>
       <div class="loading-bar"><div class="loading-fill"></div></div>
       <p class="loading-text" id="loadingText">Generando contenido...</p>
     </div>
@@ -382,6 +398,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="/app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

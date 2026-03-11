@@ -34,8 +34,8 @@ body {
   background: var(--black);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 1.05rem;
+  line-height: 1.7;
   min-height: 100dvh;
   overflow-x: hidden;
   padding-bottom: env(safe-area-inset-bottom);
@@ -97,12 +97,16 @@ body {
   gap: 10px;
 }
 
-.logo-img {
-  width: 44px;
-  height: 44px;
-  border-radius: 6px;
-  object-fit: cover;
-  border: 1px solid var(--gold-dark);
+.logo-skull {
+  font-size: 2rem;
+  color: var(--gold);
+  filter: drop-shadow(0 0 8px var(--gold-glow));
+  animation: skullFloat 4s ease-in-out infinite;
+}
+
+@keyframes skullFloat {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-2px); }
 }
 
 .logo-text {
@@ -113,11 +117,11 @@ body {
 
 .logo-main {
   font-family: var(--font-display);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--gold);
-  letter-spacing: 0.1em;
-  text-shadow: 0 0 20px var(--gold-glow);
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 15px var(--gold-glow);
 }
 
 .logo-sub {
@@ -713,19 +717,16 @@ body {
   gap: 1.2rem;
 }
 
-.loading-logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 12px;
-  object-fit: cover;
-  animation: logoPulse 1.2s ease-in-out infinite;
-  border: 2px solid var(--gold-dark);
-  box-shadow: 0 0 30px var(--gold-glow);
+.loading-skull {
+  font-size: 3.5rem;
+  color: var(--gold);
+  animation: skullPulse 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px var(--gold-glow));
 }
 
-@keyframes logoPulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50%       { transform: scale(1.08); opacity: 1; }
+@keyframes skullPulse {
+  0%, 100% { transform: scale(1);    opacity: 0.8; }
+  50%       { transform: scale(1.1); opacity: 1; }
 }
 
 .loading-bar {
@@ -819,3 +820,112 @@ body {
   .multiply-results { padding: 1.25rem; gap: 8px; background: none; }
   .multiply-card { border: 1px solid var(--border); border-radius: var(--radius2); }
 }
+
+/* ── PWA Install Banner ── */
+.pwa-banner {
+  background: linear-gradient(135deg, #1a1500 0%, #2a2000 100%);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 0.75rem 1rem;
+  position: relative;
+  z-index: 95;
+  animation: slideDown 400ms ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.pwa-banner.hidden { display: none; }
+
+.pwa-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.pwa-banner-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.pwa-banner-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.pwa-banner-text strong {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.pwa-banner-text span {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+}
+
+.pwa-install-btn {
+  background: var(--gold);
+  border: none;
+  color: var(--black);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  padding: 7px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all var(--transition);
+}
+
+.pwa-install-btn:hover {
+  background: var(--gold3);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.pwa-close-btn {
+  background: none;
+  border: 1px solid var(--border2);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--transition);
+}
+
+.pwa-close-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.pwa-ios-hint {
+  display: none;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 0.4rem;
+  background: rgba(245,200,0,0.06);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.pwa-ios-hint strong { color: var(--gold); }
+.pwa-ios-hint.show { display: block; }
